@@ -20,17 +20,19 @@
             font-family: 'Open Sans', sans-serif;
             background: #e8e0d6;
             color: #2d2a24;
-            padding: 30px 20px;
+            padding: clamp(16px, 3vw, 32px) clamp(14px, 3vw, 25px);
+            overflow-x: hidden;
         }
 
         .infografia {
             max-width: 1200px;
             margin: 0 auto;
             background: #ffffff;
-            border-radius: 20px;
+            border-radius: clamp(16px, 2vw, 20px);
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
             overflow: hidden;
-            padding: 45px 40px 35px;
+            padding: clamp(24px, 4.5vw, 45px) clamp(18px, 4vw, 40px) clamp(22px, 3.5vw, 35px);
+            overflow-wrap: anywhere;
         }
 
         /* ===== ENCABEZADO ===== */
@@ -57,7 +59,7 @@
         .header h1 {
             font-family: 'Playfair Display', serif;
             font-weight: 700;
-            font-size: 3rem;
+            font-size: clamp(1.6rem, 4.6vw, 3rem);
             color: #1a2a3a;
             letter-spacing: -0.5px;
             line-height: 1.2;
@@ -69,7 +71,7 @@
         }
 
         .header .subtitulo {
-            font-size: 1.15rem;
+            font-size: clamp(0.9rem, 1.5vw, 1.15rem);
             color: #5a4e3e;
             font-weight: 600;
             margin-top: 10px;
@@ -116,7 +118,7 @@
             border-radius: 14px;
             margin-bottom: 45px;
             text-align: center;
-            font-size: 1.1rem;
+            font-size: clamp(0.95rem, 1.2vw, 1.1rem);
             line-height: 1.8;
             box-shadow: 0 4px 15px rgba(26,42,58,0.3);
             position: relative;
@@ -634,7 +636,15 @@
             width: 20px;
         }
 
-        /* ===== RESPONSIVE ===== */
+        /* ===== RESPONSIVE: ADAPTACIÓN TOTAL A CUALQUIER PANTALLA ===== */
+        /* Escala tipográfica proporcional: el contenido usa unidades rem,
+           así que reducir el font-size base reescala toda la infografía. */
+        @media (max-width: 920px) { html { font-size: 15px; } }
+        @media (max-width: 700px) { html { font-size: 14px; } }
+        @media (max-width: 480px) { html { font-size: 13px; } }
+        @media (max-width: 380px) { html { font-size: 12.5px; } }
+
+        /* ===== Tabletas y pantallas medianas (≤ 920px) ===== */
         @media (max-width: 920px) {
             .infografia { padding: 25px 18px; }
             .header h1 { font-size: 2.2rem; }
@@ -672,6 +682,7 @@
                 border-right: none !important;
                 padding: 16px 20px !important;
             }
+            .periodo .detalle ul { line-height: 1.75; }
 
             .periodo::after {
                 left: 20px;
@@ -694,9 +705,14 @@
                 grid-template-columns: repeat(2, 1fr);
             }
 
-            .grafico-barras {
-                height: 150px;
-            }
+            /* Gráfico de barras: alturas proporcionales a un contenedor de 150px */
+            .grafico-barras { height: 150px; }
+            .barra-item:nth-child(1) .barra { height: 53px !important; }
+            .barra-item:nth-child(2) .barra { height: 23px !important; }
+            .barra-item:nth-child(3) .barra { height: 64px !important; }
+            .barra-item:nth-child(4) .barra { height: 38px !important; }
+            .barra-item:nth-child(5) .barra { height: 68px !important; }
+            .barra .valor { top: -20px; }
 
             .datos-estudiante {
                 flex-direction: column;
@@ -706,10 +722,20 @@
             }
 
             .intro { font-size: 1rem; padding: 20px; }
+            .intro::before { font-size: 4rem; left: 10px; }
         }
 
+        /* ===== Pantallas pequeñas (≤ 700px) ===== */
+        @media (max-width: 700px) {
+            .datos-estudiante { font-size: 0.8rem; }
+            .referencias { font-size: 0.78rem; }
+            .grafico-container { padding: 20px 16px 16px; }
+            .tabla-paradigmas { padding: 20px 18px; }
+        }
+
+        /* ===== Smartphones (≤ 480px) ===== */
         @media (max-width: 480px) {
-            .infografia { padding: 15px 10px; }
+            .infografia { padding: 15px 10px; border-radius: 16px; }
             .header h1 { font-size: 1.6rem; }
             .header .subtitulo { font-size: 0.85rem; }
 
@@ -717,7 +743,10 @@
                 grid-template-columns: 1fr 1fr;
                 gap: 10px;
             }
+            .stat-item { padding: 14px 10px; }
+            .stat-item .icono-stat { font-size: 1.5rem; }
             .stat-item .numero { font-size: 1.6rem; }
+            .stat-item .label { font-size: 0.78rem; }
 
             .periodo { padding-left: 40px; }
             .periodo::after {
@@ -728,8 +757,36 @@
             .timeline::before { left: 15px; }
 
             .detalle ul li { font-size: 0.82rem; }
-            .actores-grid { grid-template-columns: 1fr 1fr; }
-            .grafico-barras { height: 120px; }
+
+            .tabla-grid { font-size: 0.78rem; }
+            .tabla-grid .celda { padding: 11px 12px; }
+
+            /* Gráfico de barras: alturas proporcionales a un contenedor de 120px */
+            .grafico-barras { height: 120px; padding: 0 6px; }
+            .barra-item:nth-child(1) .barra { height: 42px !important; }
+            .barra-item:nth-child(2) .barra { height: 18px !important; }
+            .barra-item:nth-child(3) .barra { height: 51px !important; }
+            .barra-item:nth-child(4) .barra { height: 30px !important; }
+            .barra-item:nth-child(5) .barra { height: 54px !important; }
+            .barra .valor { font-size: 0.72rem; top: -18px; }
+            .barra-item .label-barra { font-size: 0.65rem; }
+        }
+
+        /* ===== Móviles muy pequeños (≤ 400px) ===== */
+        @media (max-width: 400px) {
+            .header h1 { font-size: 1.5rem; }
+            .stats { grid-template-columns: 1fr; gap: 12px; }
+            .stat-item .numero { font-size: 1.7rem; }
+            .actores-grid { grid-template-columns: 1fr; }
+            .intro { font-size: 0.92rem; padding: 14px 16px; }
+            .intro::before { font-size: 3rem; }
+            .periodo .detalle ul { line-height: 1.8; }
+            .grafico-barras { height: 110px; }
+            .barra-item:nth-child(1) .barra { height: 38px !important; }
+            .barra-item:nth-child(2) .barra { height: 17px !important; }
+            .barra-item:nth-child(3) .barra { height: 47px !important; }
+            .barra-item:nth-child(4) .barra { height: 28px !important; }
+            .barra-item:nth-child(5) .barra { height: 49px !important; }
         }
     </style>
 </head>
